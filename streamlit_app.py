@@ -124,37 +124,113 @@ elif choice == "CS Deep Dive":
     st.plotly_chart(fig, use_container_width=True)
 
 elif choice == "Đề xuất AI Agent":
-    st.title("6 Đề xuất AI Agent trong CS")
+    st.title("Đề xuất AI Agent theo từng ngành trong CS")
+    st.markdown("Mỗi ngành trong Khoa học Máy tính sẽ phù hợp với một hoặc nhiều AI Agent khác nhau, dựa trên nhu cầu và khả năng tự động hóa.")
 
-    props = [
-        ("SQA & Testing Agent", 3.76, 3.23, -0.53, "#2E86AB",
-         "Tự động sinh test case, chạy regression test, phát hiện bug pattern",
-         "Công việc lặp lại nhiều lần (viết test, chạy test), cần mở rộng quy mô kiểm thử"),
-        ("Database Admin Agent", 3.80, 2.53, -1.27, "#A23B72",
-         "Tối ưu câu lệnh SQL, tự động backup & monitoring, phát hiện bất thường",
-         "Công việc lặp lại (tối ưu query, backup), dễ xảy ra sai sót nếu làm thủ công"),
-        ("Web Dev Agent", 4.09, 3.07, -1.02, "#F18F01",
-         "Chuyển từ bản vẽ Figma sang code, tự động review code, sinh tài liệu",
-         "Giải phóng thời gian cho lập trình viên, giảm việc lặp lại (viết boilerplate)"),
-        ("Research Agent", 2.60, 3.77, +1.17, "#F25F5C",
-         "Tìm kiếm tài liệu khoa học, thiết kế thí nghiệm, đảm bảo kết quả tái lập",
-         "Giải phóng thời gian đọc papers, giảm độ khó trong thiết kế thí nghiệm"),
-        ("Project Mgmt Agent", 2.55, 2.86, +0.31, "#247BA0",
-         "Lập kế hoạch dự án, theo dõi rủi ro, tự động tạo báo cáo tiến độ",
-         "Giải phóng thời gian làm báo cáo, giảm căng thẳng khi theo dõi nhiều dự án"),
-        ("Network Admin Agent", 3.42, 3.65, +0.23, "#70C1B3",
-         "Tự động phát hiện và sửa lỗi mạng, ứng phó sự cố bảo mật, dự báo tài nguyên",
-         "Công việc lặp lại (kiểm tra mạng hàng ngày), cần xử lý ở quy mô lớn (24/7)")
+    recommendations = [
+        {
+            "occupation": "Computer Programmers",
+            "desire": 2.93, "capacity": 3.84, "gap": -0.91,
+            "agents": ["Code Generation Agent", "Code Review Agent", "Documentation Agent"],
+            "reason": "Lập trình viên viết đi viết lại code boilerplate, cần review code và sinh tài liệu. AI Agent giúp tăng tốc độ lập trình và giảm lỗi.",
+            "icon": "💻"
+        },
+        {
+            "occupation": "Software Quality Assurance Analysts and Testers",
+            "desire": 3.23, "capacity": 3.76, "gap": -0.53,
+            "agents": ["Test Automation Agent", "Bug Detection Agent", "Test Case Generator"],
+            "reason": "Viết và chạy test case là công việc lặp lại, tốn thời gian. AI Agent có thể tự sinh test, phát hiện bug và chạy regression.",
+            "icon": "✅"
+        },
+        {
+            "occupation": "Web Developers",
+            "desire": 3.07, "capacity": 4.09, "gap": -1.02,
+            "agents": ["Web Dev Agent", "UI-to-Code Agent", "Accessibility Agent"],
+            "reason": "Chuyển thiết kế Figma sang code, kiểm tra accessibility và sinh tài liệu web. AI làm rất tốt (4.09/5) nhưng developer chưa tận dụng hết.",
+            "icon": "🌐"
+        },
+        {
+            "occupation": "Database Administrators",
+            "desire": 2.53, "capacity": 3.80, "gap": -1.27,
+            "agents": ["DBA Agent", "Query Optimization Agent", "NL2SQL Agent"],
+            "reason": "Tối ưu query, backup, monitoring là công việc lặp lại và dễ sai sót. AI có thể làm hoàn toàn tự động (3.80/5) nhưng DBA chưa muốn (2.53/5).",
+            "icon": "🗄️"
+        },
+        {
+            "occupation": "Network and Computer Systems Administrators",
+            "desire": 3.65, "capacity": 3.42, "gap": +0.23,
+            "agents": ["Network Admin Agent", "Self-healing Agent", "Security Response Agent"],
+            "reason": "Quản trị mạng cần giám sát 24/7, phát hiện và xử lý sự cố. AI Agent giúp tự động hóa các tác vụ lặp lại và phản ứng nhanh với sự cố.",
+            "icon": "🌍"
+        },
+        {
+            "occupation": "Computer Network Support Specialists",
+            "desire": 2.71, "capacity": 3.74, "gap": -1.03,
+            "agents": ["Helpdesk Agent", "Troubleshooting Agent", "Network Monitoring Agent"],
+            "reason": "Hỗ trợ người dùng về mạng là công việc lặp lại. AI Agent có thể chẩn đoán và hướng dẫn sửa lỗi cơ bản, giảm tải cho nhân viên.",
+            "icon": "📞"
+        },
+        {
+            "occupation": "Computer User Support Specialists",
+            "desire": 2.95, "capacity": 3.89, "gap": -0.94,
+            "agents": ["IT Helpdesk Agent", "FAQ Bot", "Remote Troubleshooting Agent"],
+            "reason": "Hỗ trợ người dùng cuối giải quyết các vấn đề máy tính. AI Agent có thể trả lời tự động các câu hỏi thường gặp và chẩn đoán lỗi cơ bản.",
+            "icon": "🖥️"
+        },
+        {
+            "occupation": "Computer and Information Research Scientists",
+            "desire": 3.77, "capacity": 2.60, "gap": +1.17,
+            "agents": ["Research Agent", "Literature Review Agent", "Experiment Design Agent"],
+            "reason": "Nhà nghiên cứu mong muốn tự động hóa nhất (3.77/5) nhưng công nghệ hiện tại chưa đáp ứng được (2.60/5). Agent hỗ trợ tìm tài liệu, thiết kế thí nghiệm.",
+            "icon": "🔬"
+        },
+        {
+            "occupation": "Computer Systems Analysts",
+            "desire": 2.60, "capacity": 3.41, "gap": -0.81,
+            "agents": ["Requirement Analysis Agent", "System Design Agent", "Documentation Agent"],
+            "reason": "Phân tích hệ thống cần thu thập yêu cầu, thiết kế và lập tài liệu. AI Agent hỗ trợ phân tích dữ liệu và tạo tài liệu tự động.",
+            "icon": "📊"
+        },
+        {
+            "occupation": "Computer Systems Engineers/Architects",
+            "desire": 3.23, "capacity": 3.04, "gap": +0.19,
+            "agents": ["Architecture Review Agent", "Design Validation Agent", "Tech Stack Advisor"],
+            "reason": "Kiến trúc sư hệ thống cần đánh giá và tư vấn giải pháp. AI Agent hỗ trợ đánh giá thiết kế, đề xuất công nghệ phù hợp.",
+            "icon": "🏗️"
+        },
+        {
+            "occupation": "Information Security Analysts",
+            "desire": 3.18, "capacity": 3.00, "gap": +0.18,
+            "agents": ["Security Monitoring Agent", "Threat Detection Agent", "Compliance Checker"],
+            "reason": "Bảo mật thông tin cần giám sát liên tục và phát hiện xâm nhập. AI Agent giúp phát hiện bất thường và kiểm tra tuân thủ quy định.",
+            "icon": "🔒"
+        },
+        {
+            "occupation": "Information Technology Project Managers",
+            "desire": 2.86, "capacity": 2.55, "gap": +0.31,
+            "agents": ["Project Planning Agent", "Risk Monitoring Agent", "Report Generator"],
+            "reason": "Quản lý dự án cần lập kế hoạch, theo dõi rủi ro và báo cáo. AI Agent hỗ trợ phân tích tiến độ và tự động tạo báo cáo.",
+            "icon": "📋"
+        },
+        {
+            "occupation": "Computer and Information Systems Managers",
+            "desire": 3.31, "capacity": 2.56, "gap": +0.75,
+            "agents": ["Dashboard Agent", "Resource Planning Agent", "Decision Support Agent"],
+            "reason": "Quản lý hệ thống thông tin cần tổng hợp báo cáo và hỗ trợ ra quyết định. AI Agent giúp phân tích dữ liệu và đề xuất phương án.",
+            "icon": "📈"
+        }
     ]
 
-    for title, cap, desire, gap, color, desc, reasons in props:
+    for r in recommendations:
         with st.container():
-            st.subheader(title)
-            c1, c2 = st.columns([1, 3])
-            c1.metric("Gap", f"{gap:+}")
-            c2.markdown(f"**AI làm được**: {cap}/5 • **Người muốn**: {desire}/5")
-            st.markdown(f"**🧩 Ứng dụng:** {desc}")
-            st.markdown(f"**💡 Lý do nên làm:** {reasons}")
+            st.subheader(f"{r['icon']} {r['occupation']}")
+            col1, col2 = st.columns([1, 3])
+            with col1:
+                st.metric("Gap", f"{r['gap']:+}")
+                st.markdown(f"**Muốn**: {r['desire']}/5 • **Được**: {r['capacity']}/5")
+            with col2:
+                st.markdown(f"**🤖 AI Agent phù hợp:** {', '.join(r['agents'])}")
+                st.markdown(f"**💡 Giải thích:** {r['reason']}")
             st.divider()
 
    
