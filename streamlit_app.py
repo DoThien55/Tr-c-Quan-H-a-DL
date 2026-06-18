@@ -111,20 +111,26 @@ elif choice == "CS Deep Dive":
         st.subheader("Worker Self-Report")
         st.dataframe(pd.DataFrame([m1]).T.rename(columns={0:"Value"}), use_container_width=True)
         st.info("""
-        **Hướng dẫn:** Cột bên trái là kết quả khảo sát từ chính người lao động trong ngành đó.
-        - **Automation Desire (1-5)**: Họ có muốn tự động hóa task này không? (5 = rất muốn)
-        - **Core Skill**: Họ tự đánh giá kỹ năng của mình ở task này
-        - **Enjoyment**: Họ có thích làm task này không?
-        - **Human Agency**: Họ có muốn giữ con người trong quy trình không?
+        **Hướng dẫn:** Kết quả khảo sát từ chính người lao động (thang 1-5)
+        - **Automation Desire**: Mong muốn tự động hóa task này (1 = không muốn, 5 = rất muốn)
+        - **Core Skill**: Tự đánh giá kỹ năng của bản thân ở task này (1 = yếu, 5 = rất giỏi)
+        - **Job Security**: Mức độ lo ngại mất việc nếu task bị tự động hóa (1 = rất lo, 5 = không lo)
+        - **Enjoyment**: Mức độ yêu thích khi làm task này (1 = ghét, 5 = rất thích)
+        - **Involved Uncertainty**: Mức độ bất định / khó đoán của task (1 = rõ ràng, 5 = rất bất định)
+        - **Domain Expertise**: Mức độ cần kiến thức chuyên môn sâu (1 = không cần, 5 = rất cần)
+        - **Interpersonal Communication**: Mức độ cần giao tiếp với người khác (1 = không cần, 5 = rất cần)
+        - **Human Agency**: Mức độ cần giữ con người trong quy trình (1 = có thể giao hẳn cho AI, 5 = nhất định phải có người)
         """)
     with col2:
         st.subheader("Expert Rating")
         st.dataframe(pd.DataFrame([m2]).T.rename(columns={0:"Value"}), use_container_width=True)
         st.info("""
-        **Hướng dẫn:** Cột bên phải là đánh giá từ chuyên gia về khả năng tự động hóa.
-        - **Automation Capacity (1-5)**: AI có thể làm task này tốt đến đâu? (5 = rất tốt)
-        - **Physical Action**: Task có cần hành động thể chất không?
-        - **Domain Expertise**: Task có cần kiến thức chuyên sâu không?
+        **Hướng dẫn:** Đánh giá từ chuyên gia về khả năng tự động hóa (thang 1-5)
+        - **Automation Capacity**: AI có thể làm task này tốt đến đâu? (1 = không thể, 5 = rất tốt)
+        - **Physical Action**: Task có cần hành động thể chất / tay chân không? (1 = hoàn toàn trên máy, 5 = cần nhiều)
+        - **Involved Uncertainty**: Mức độ bất định khi AI làm task này (1 = đơn giản rõ ràng, 5 = phức tạp khó lường)
+        - **Domain Expertise**: Mức độ cần kiến thức chuyên môn sâu để làm task (1 = ai cũng làm được, 5 = cần chuyên gia)
+        - **Interpersonal Communication**: Mức độ cần giao tiếp với người khác khi làm task (1 = không cần nói chuyện, 5 = cần giao tiếp liên tục)
         """)
 
     fig = go.Figure()
