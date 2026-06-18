@@ -40,11 +40,10 @@ if choice == "Tổng quan":
     st.title("AI Agent trong Khoa học Máy tính")
     st.markdown("**Dataset**: 5,731 tasks (worker survey) + 2,057 tasks (expert ratings)")
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3 = st.columns(3)
     col1.metric("Worker Desire", f"{len(desires):,}")
     col2.metric("Expert Capacity", f"{len(capability):,}")
     col3.metric("CS Occupations", len(CS_ROLES))
-    col4.metric("LLM Daily Use (CS)", "47%")
 
     st.subheader("Lý do Worker muốn tự động hóa")
     rc = {c.split(" - ")[1]: int(desires[c].sum()) for c in
