@@ -106,31 +106,3 @@
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
----
-
-## GIẢI THÍCH NHANH
-
-| Ký hiệu | Ý nghĩa |
-|---------|---------|
-| 🔥 GAP ÂM | AI đủ giỏi, worker chưa biết → **Triển khai ngay** |
-| ⏳ GAP DƯƠNG | Worker muốn nhưng AI chưa đủ → **Cần chờ công nghệ** |
-| GAP = Desire - Capacity | = Worker muốn bao nhiêu trừ đi AI làm được bao nhiêu |
-
-## 3 SỐ LIỆU CHÍNH
-
-| Số | Nội dung | Giá trị |
-|----|----------|---------|
-| 1 | Lý do muốn tự động hóa số 1 | 🕐 **Giải phóng thời gian (44%)** |
-| 2 | Lý do giữ con người số 1 | 🧠 **Kiến thức chuyên môn (30%)** |
-| 3 | Khoảng cách lớn nhất | 🗄️ **Database Admin (GAP = -1.27)** |
-
-## 6 AI AGENT NGẮN GỌN
-
-| # | Agent | Làm gì? | GAP | Mức độ |
-|---|-------|---------|-----|--------|
-| 1 | **DBA Agent** 🗄️ | Tự động tối ưu SQL, backup, phát hiện lỗi | -1.27 | 🔥 CAO NHẤT |
-| 2 | **Web Dev Agent** 🌐 | Viết code từ bản vẽ, kiểm tra code tự động | -1.02 | 🔥 Cao |
-| 3 | **Network Admin Agent** 🌍 | Sửa lỗi mạng, phát hiện xâm nhập | +0.23 | 🔥 Cao |
-| 4 | **SQA & Test Agent** ✅ | Kiểm tra lỗi phần mềm tự động | -0.53 | 🔥 Cao |
-| 5 | **Research Agent** 🔬 | Tìm tài liệu, thiết kế thí nghiệm | +1.17 | ⏳ Chờ |
-| 6 | **Project Mgmt Agent** 📋 | Lập kế hoạch, báo cáo tiến độ | +0.31 | ⏳ Chờ |
