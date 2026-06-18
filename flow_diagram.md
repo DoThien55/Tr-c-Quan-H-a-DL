@@ -1,96 +1,136 @@
-# 🧠 SƠ ĐỒ LUỒNG: TỪ DỮ LIỆU → PHÂN TÍCH → KHUYẾN NGHỊ AI AGENT
+# SƠ ĐỒ LUỒNG: TỪ DỮ LIỆU → PHÂN TÍCH → KHUYẾN NGHỊ AI AGENT
 
-![Flow Diagram](flow_diagram.png)
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                      1. DỮ LIỆU ĐẦU VÀO (4 CSV)                           ║
+║                                                                            ║
+║  ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐  ┌───────────┐ ║
+║  │ Worker Desires  │  │ Expert Capacity │  │   Metadata   │  │ Task Info │ ║
+║  │ 5,731 tasks     │  │ 2,057 tasks     │  │ 1,500 workers│  │ O*NET     │ ║
+║  │ Worker tự đánh  │  │ Chuyên gia đánh │  │ Nhân khẩu +  │  │ Tần suất  │ ║
+║  │ giá mức muốn    │  │ giá khả năng tự │  │ AI attitude  │  │ Importance│ ║
+║  │ tự động hóa     │  │ động hóa được   │  │ + LLM usage  │  │           │ ║
+║  └────────┬────────┘  └────────┬────────┘  └──────┬───────┘  └─────┬─────┘ ║
+╚═══════════╪════════════════════╪═══════════════════╪════════════════╪═══════╝
+            │                    │                   │                │
+            └────────┬───────────┴───────┬───────────┴────┬───────────┘
+                     │                   │                │
+                     ▼                   ▼                ▼
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                       2. PHÂN TÍCH & XỬ LÝ                                 ║
+║                                                                            ║
+║  ┌─────────────────────────────────┐                                       ║
+║  │ [Worker Desire Analysis]        │                                       ║
+║  │ - Mức độ mong muốn tự động hóa  │                                       ║
+║  │ - Lý do: Free Time, Lặp lại,... │                                       ║
+║  │ - Mức độ quan trọng của con     │                                       ║
+║  │   người (Human Agency)          │                                       ║
+║  └───────────────┬─────────────────┘                                       ║
+║                  │                                                         ║
+║  ┌─────────────────────────────────┐                                       ║
+║  │ [Expert Capacity Analysis]      │                                       ║
+║  │ - Khả năng tự động hóa thực tế  │                                       ║
+║  │ - Yếu tố ảnh hưởng: độ phức     │                                       ║
+║  │   tạp, giao tiếp, chuyên môn    │                                       ║
+║  └───────────────┬─────────────────┘                                       ║
+║                  │                                                         ║
+║  ┌─────────────────────────────────┐                                       ║
+║  │ [Metadata Analysis]             │                                       ║
+║  │ - Mức độ sẵn sàng dùng AI      │                                       ║
+║  │ - LLM adoption rate             │                                       ║
+║  │ - Thái độ với AI               │                                       ║
+║  └───────────────┬─────────────────┘                                       ║
+╚══════════════════╪══════════════════════════════════════════════════════════╝
+                   │
+                   ▼
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                        3. INSIGHTS & KPIs                                  ║
+║                                                                            ║
+║  ┌────────────────────┐  ┌────────────────────┐  ┌──────────────────────┐  ║
+║  │ [GAP ANALYSIS]     │  │ [REASON ANALYSIS]  │  │ [CS DEEP DIVE]       │  ║
+║  │                    │  │                    │  │                      │  ║
+║  │ So sánh:           │  │ Lý do MUỐN tự động│  │ - LLM adoption 47%   │  ║
+║  │ Desire vs Capacity │  │ hóa: Free Time 44% │  │ - Tương quan giữa    │  ║
+║  │                    │  │ Lý do KHÔNG muốn:  │  │   các yếu tố         │  ║
+║  │ GAP ÂM = Cơ hội    │  │ Domain Knowledge   │  │ - Phân tích từng     │  ║
+║  │ GAP DƯƠNG = Thách  │  │ 30%, Oversight 30% │  │   occupation cụ thể  │  ║
+║  │ thức               │  │                    │  │                      │  ║
+║  └─────────┬──────────┘  └─────────┬──────────┘  └──────────┬───────────┘  ║
+╚════════════╪═══════════════════════╪═════════════════════════╪══════════════╝
+             │                       │                         │
+             └───────────┬───────────┴─────────────┬───────────┘
+                         │                         │
+                         ▼                         ▼
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                     4. ĐỀ XUẤT AI AGENT (6 cái)                           ║
+║                                                                            ║
+║  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌────────┐  ┌──────┐ ║
+║  │  SQA &  │  │   DBA   │  │ Web Dev │  │Research │  │Project │  │Net-  │ ║
+║  │  Test   │  │  Agent  │  │  Agent  │  │  Agent  │  │ Mgmt   │  │work  │ ║
+║  │  Agent  │  │         │  │         │  │         │  │ Agent  │  │Admin │ ║
+║  │         │  │         │  │         │  │         │  │        │  │Agent │ ║
+║  │Gap:-0.53│  │Gap:-1.27│  │Gap:-1.02│  │Gap:+1.17│  │Gap:+0.3│  │Gap:  │ ║
+║  │🔥Cao   │  │🔥CAO    │  │🔥CAO    │  │⏳Chờ   │  │⏳Chờ  │  │+0.23 │ ║
+║  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘  └───┬────┘  └───┬──┘ ║
+╚═══════╪═════════════╪═══════════╪═════════════╪═══════════╪═══════════╪═════╝
+        │             │           │             │           │           │
+        └──────┬──────┴─────┬─────┴──────┬──────┴─────┬─────┴─────┬─────┘
+               │            │            │            │           │
+               ▼            ▼            ▼            ▼           ▼
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                        5. KIẾN TRÚC AI AGENT                               ║
+║                                                                            ║
+║  ┌──────────────────────────────────────────────────────────────────────┐  ║
+║  │          CON NGƯỜI (Human Oversight)                                │  ║
+║  │     • Kiểm tra chất lượng • Quyết định cuối • Cung cấp chuyên môn   │  ║
+║  └────────────────────────────┬─────────────────────────────────────────┘  ║
+║                               │ Phê duyệt / Feedback                       ║
+║                               ▼                                             ║
+║  ┌──────────────────────────────────────────────────────────────────────┐  ║
+║  │                 ORCHESTRATOR AGENT                                   │  ║
+║  │  Nhận y/c → Chia nhỏ → Gọi đúng Agent → Gom kết quả → Báo cáo       │  ║
+║  └──┬─────┬─────┬─────┬─────┬──────┬─────┬──────────────────────────────┘  ║
+║     │     │     │     │     │      │                                      ║
+║     ▼     ▼     ▼     ▼     ▼      ▼                                      ║
+║   📝    🗄️    🌐    ✅    🔬     📋                                       ║
+║  CODE   DB   WEB  TEST  RESEARCH  PM                                       ║
+║  AGENT AGENT AGENT AGENT  AGENT  AGENT                                     ║
+║     │     │     │     │     │      │                                      ║
+║     └─────┴─────┴─────┴─────┴──────┘                                      ║
+║                     │                                                      ║
+║                     ▼                                                      ║
+║  ┌──────────────────────────────────────────────────────────────────────┐  ║
+║  │            TOOL LAYER (Công cụ)                                     │  ║
+║  │         APIs • Database • Git • Cloud • CLI                         │  ║
+║  └──────────────────────────────────────────────────────────────────────┘  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
 
 ---
 
-## 📖 Đọc sơ đồ từ trên xuống dưới
+## GIẢI THÍCH NHANH
 
-| Tầng | Tên | Mô tả ngắn |
-|------|-----|-----------|
-| 🟢 **1** | **DỮ LIỆU ĐẦU VÀO** | 4 file CSV: khảo sát worker (5,731 tasks) + chuyên gia (2,057 tasks) |
-| 🔵 **2** | **PHÂN TÍCH & XỬ LÝ** | Chia thành 3 nhánh: Worker muốn gì? Chuyên gia nói gì? Worker dùng AI thế nào? |
-| 🟠 **3** | **INSIGHTS & KPIs** | Tổng hợp ra: Gap (khoảng cách), Lý do (tại sao muốn/không muốn), Tương quan |
-| 🩷 **4** | **ĐỀ XUẤT AI AGENT** | 6 Agent được đề xuất dựa trên số liệu ở tầng 3 |
-| 🟣 **5** | **KIẾN TRÚC** | Cách xây dựng: Con người giám sát → AI làm → Công cụ hỗ trợ |
+| Ký hiệu | Ý nghĩa |
+|---------|---------|
+| 🔥 GAP ÂM | AI đủ giỏi, worker chưa biết → **Triển khai ngay** |
+| ⏳ GAP DƯƠNG | Worker muốn nhưng AI chưa đủ → **Cần chờ công nghệ** |
+| GAP = Desire - Capacity | = Worker muốn bao nhiêu trừ đi AI làm được bao nhiêu |
 
----
+## 3 SỐ LIỆU CHÍNH
 
-## 🎯 Kết quả chính (ai cũng hiểu được)
+| Số | Nội dung | Giá trị |
+|----|----------|---------|
+| 1 | Lý do muốn tự động hóa số 1 | 🕐 **Giải phóng thời gian (44%)** |
+| 2 | Lý do giữ con người số 1 | 🧠 **Kiến thức chuyên môn (30%)** |
+| 3 | Khoảng cách lớn nhất | 🗄️ **Database Admin (GAP = -1.27)** |
 
-### 📊 3 phát hiện quan trọng nhất
+## 6 AI AGENT NGẮN GỌN
 
-**1. Worker MUỐN tự động hóa nhất vì:**
-```
-🕐 Giải phóng thời gian (44%) 
-🔄 Công việc lặp lại (29%)
-⚠️ Giảm sai sót (29%)
-```
-
-**2. Worker KHÔNG muốn giao hẳn cho AI vì:**
-```
-🧠 Cần kiến thức chuyên môn (30%)
-✅ Cần giám sát chất lượng (30%)
-🎮 Muốn giữ quyền kiểm soát (28%)
-```
-
-**3. Có 2 loại "khoảng cách" (GAP):**
-```
-⬅️ GAP ÂM: Worker chưa biết AI làm được nhiều thế → Ưu tiên số 1
-   - Database Admin: người muốn 2.5, AI làm được 3.8 (gap -1.27)
-   - Web Developer: người muốn 3.1, AI làm được 4.1 (gap -1.02)
-
-➡️ GAP DƯƠNG: Worker muốn nhưng AI chưa đủ giỏi → Cần chờ
-   - Research Scientists: người muốn 3.8, AI chỉ được 2.6 (gap +1.17)
-```
-
----
-
-## 🚀 6 AI Agent đề xuất (ưu tiên từ cao đến thấp)
-
-| # | AI Agent | Làm gì? | Mức ưu tiên |
-|---|----------|---------|------------|
-| 1 | **Database Admin Agent** 🗄️ | Tự động tối ưu câu lệnh SQL, backup, phát hiện lỗi | 🔥 Cao nhất (gap -1.27) |
-| 2 | **Web Dev Agent** 🌐 | Tự viết code từ bản vẽ, tự động kiểm tra code | 🔥 Cao (gap -1.02) |
-| 3 | **Network Admin Agent** 🌍 | Tự sửa lỗi mạng, phát hiện xâm nhập | 🔥 Cao (gap +0.23) |
-| 4 | **SQA & Test Agent** ✅ | Tự động kiểm tra lỗi phần mềm | 🔥 Cao (gap -0.53) |
-| 5 | **Research Agent** 🔬 | Tự tìm kiếm tài liệu, thiết kế thí nghiệm | ⏳ Cần chờ (gap +1.17) |
-| 6 | **Project Mgmt Agent** 📋 | Tự lập kế hoạch, báo cáo tiến độ | ⏳ Cần chờ (gap +0.31) |
-
----
-
-## 🏗️ Cách AI Agent hoạt động
-
-```
-┌──────────────────────────────────────┐
-│          CON NGƯỜI (GIÁM SÁT)         │
-│  • Kiểm tra chất lượng đầu ra        │
-│  • Quyết định cuối cùng              │
-│  • Nhập kiến thức chuyên môn         │
-└──────────────┬───────────────────────┘
-               │ Phê duyệt / Góp ý
-               ▼
-┌──────────────────────────────────────┐
-│         ORCHESTRATOR AGENT            │
-│  • Nhận yêu cầu → Chia nhỏ công việc │
-│  • Gọi đúng Agent cho từng việc      │
-│  • Báo cáo kết quả về cho người      │
-└──┬────┬────┬────┬────┬────┬──────────┘
-   │    │    │    │    │    │
-   ▼    ▼    ▼    ▼    ▼    ▼
- 📝  🗄️  🌐  ✅  🔬  📋
- CODE  DB  WEB TEST RESEARCH PM
- AGENT AGENT AGENT AGENT AGENT AGENT
-   │    │    │    │    │    │
-   └────┴────┴────┴────┴────┘
-               │
-               ▼
-┌──────────────────────────────────────┐
-│     CÔNG CỤ (Tool Layer)             │
-│  API • Database • Git • Cloud • CLI  │
-└──────────────────────────────────────┘
-```
-
----
-
-> **Tóm lại:** Dựa trên khảo sát 5,731 tasks và đánh giá của chuyên gia, chúng tôi đề xuất 6 AI Agent giúp giảm tải công việc lặp lại, giải phóng thời gian cho người làm CNTT tập trung vào việc quan trọng hơn. **Database Admin Agent** và **Web Dev Agent** là 2 ưu tiên cao nhất vì AI đã đủ giỏi nhưng người dùng chưa biết.
+| # | Agent | Làm gì? | GAP | Mức độ |
+|---|-------|---------|-----|--------|
+| 1 | **DBA Agent** 🗄️ | Tự động tối ưu SQL, backup, phát hiện lỗi | -1.27 | 🔥 CAO NHẤT |
+| 2 | **Web Dev Agent** 🌐 | Viết code từ bản vẽ, kiểm tra code tự động | -1.02 | 🔥 Cao |
+| 3 | **Network Admin Agent** 🌍 | Sửa lỗi mạng, phát hiện xâm nhập | +0.23 | 🔥 Cao |
+| 4 | **SQA & Test Agent** ✅ | Kiểm tra lỗi phần mềm tự động | -0.53 | 🔥 Cao |
+| 5 | **Research Agent** 🔬 | Tìm tài liệu, thiết kế thí nghiệm | +1.17 | ⏳ Chờ |
+| 6 | **Project Mgmt Agent** 📋 | Lập kế hoạch, báo cáo tiến độ | +0.31 | ⏳ Chờ |
