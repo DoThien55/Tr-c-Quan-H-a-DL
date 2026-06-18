@@ -110,9 +110,22 @@ elif choice == "CS Deep Dive":
     with col1:
         st.subheader("Worker Self-Report")
         st.dataframe(pd.DataFrame([m1]).T.rename(columns={0:"Value"}), use_container_width=True)
+        st.info("""
+        **Hướng dẫn:** Cột bên trái là kết quả khảo sát từ chính người lao động trong ngành đó.
+        - **Automation Desire (1-5)**: Họ có muốn tự động hóa task này không? (5 = rất muốn)
+        - **Core Skill**: Họ tự đánh giá kỹ năng của mình ở task này
+        - **Enjoyment**: Họ có thích làm task này không?
+        - **Human Agency**: Họ có muốn giữ con người trong quy trình không?
+        """)
     with col2:
         st.subheader("Expert Rating")
         st.dataframe(pd.DataFrame([m2]).T.rename(columns={0:"Value"}), use_container_width=True)
+        st.info("""
+        **Hướng dẫn:** Cột bên phải là đánh giá từ chuyên gia về khả năng tự động hóa.
+        - **Automation Capacity (1-5)**: AI có thể làm task này tốt đến đâu? (5 = rất tốt)
+        - **Physical Action**: Task có cần hành động thể chất không?
+        - **Domain Expertise**: Task có cần kiến thức chuyên sâu không?
+        """)
 
     fig = go.Figure()
     fig.add_trace(go.Bar(name="Worker Desire", x=CS_ROLES,
@@ -121,6 +134,13 @@ elif choice == "CS Deep Dive":
                          y=[avg_cap.get(r, 0) for r in CS_ROLES], marker_color="seagreen"))
     fig.update_layout(title="Desire vs Capacity - CS Occupations", barmode="group", xaxis_tickangle=-45, height=500)
     st.plotly_chart(fig, use_container_width=True)
+    st.info("""
+    **Giải thích đồ thị trên:**
+    - **Cột xanh dương (Worker Desire)**: Mức độ người lao động trong ngành đó MUỐN được tự động hóa công việc.
+    - **Cột xanh lá (Expert Capacity)**: Mức độ chuyên gia đánh giá AI CÓ THỂ làm được công việc đó.
+    - Nếu cột xanh lá **cao hơn** xanh dương → AI đã đủ giỏi nhưng người lao động chưa biết → **Cơ hội lớn**.
+    - Nếu cột xanh dương **cao hơn** xanh lá → Người lao động muốn nhưng AI chưa đáp ứng được → **Cần chờ công nghệ**.
+    """)
 
 elif choice == "Đề xuất AI Agent":
     st.title("Đề xuất AI Agent theo từng ngành trong CS")
