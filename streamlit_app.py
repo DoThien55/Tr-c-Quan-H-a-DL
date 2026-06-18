@@ -128,27 +128,33 @@ elif choice == "Đề xuất AI Agent":
 
     props = [
         ("SQA & Testing Agent", 3.76, 3.23, -0.53, "#2E86AB",
-         "Auto test generation, regression, bug pattern detection", ["Repetitive", "Scale"]),
+         "Tự động sinh test case, chạy regression test, phát hiện bug pattern",
+         "Công việc lặp lại nhiều lần (viết test, chạy test), cần mở rộng quy mô kiểm thử"),
         ("Database Admin Agent", 3.80, 2.53, -1.27, "#A23B72",
-         "Query optimization, auto DBA, NL2SQL, anomaly detection", ["Repetitive", "Human Error"]),
+         "Tối ưu câu lệnh SQL, tự động backup & monitoring, phát hiện bất thường",
+         "Công việc lặp lại (tối ưu query, backup), dễ xảy ra sai sót nếu làm thủ công"),
         ("Web Dev Agent", 4.09, 3.07, -1.02, "#F18F01",
-         "Figma-to-code, code review, doc generation, accessibility", ["Free Time", "Repetitive"]),
+         "Chuyển từ bản vẽ Figma sang code, tự động review code, sinh tài liệu",
+         "Giải phóng thời gian cho lập trình viên, giảm việc lặp lại (viết boilerplate)"),
         ("Research Agent", 2.60, 3.77, +1.17, "#F25F5C",
-         "Literature review, experiment design, reproducibility", ["Free Time", "Difficulty"]),
+         "Tìm kiếm tài liệu khoa học, thiết kế thí nghiệm, đảm bảo kết quả tái lập",
+         "Giải phóng thời gian đọc papers, giảm độ khó trong thiết kế thí nghiệm"),
         ("Project Mgmt Agent", 2.55, 2.86, +0.31, "#247BA0",
-         "Planning, risk monitoring, status reports, meeting assistant", ["Free Time", "Stress"]),
+         "Lập kế hoạch dự án, theo dõi rủi ro, tự động tạo báo cáo tiến độ",
+         "Giải phóng thời gian làm báo cáo, giảm căng thẳng khi theo dõi nhiều dự án"),
         ("Network Admin Agent", 3.42, 3.65, +0.23, "#70C1B3",
-         "Self-healing, security response, capacity planning", ["Repetitive", "Scale"])
+         "Tự động phát hiện và sửa lỗi mạng, ứng phó sự cố bảo mật, dự báo tài nguyên",
+         "Công việc lặp lại (kiểm tra mạng hàng ngày), cần xử lý ở quy mô lớn (24/7)")
     ]
 
     for title, cap, desire, gap, color, desc, reasons in props:
         with st.container():
             st.subheader(title)
-            c1, c2, c3 = st.columns([1, 1, 2])
-            c1.metric("Capacity", cap)
-            c2.metric("Desire", desire)
-            c3.markdown(f"**Gap**: {gap:+}  •  **Lý do**: {', '.join(reasons)}")
-            st.markdown(f"{desc}")
+            c1, c2 = st.columns([1, 3])
+            c1.metric("Gap", f"{gap:+}")
+            c2.markdown(f"**AI làm được**: {cap}/5 • **Người muốn**: {desire}/5")
+            st.markdown(f"**🧩 Ứng dụng:** {desc}")
+            st.markdown(f"**💡 Lý do nên làm:** {reasons}")
             st.divider()
 
    
