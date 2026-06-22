@@ -1,70 +1,50 @@
-# AI Agent trong Khoa học Máy tính - Phân tích & Đề xuất
+# 📊 🌐 AI Agent trong Khoa học Máy tính - Phân tích & Đề xuất
 
-## Tổng quan
+Ứng dụng web trực quan hóa dữ liệu được xây dựng trên nền tảng **Streamlit** nhằm hỗ trợ các nhà quản lý, kỹ sư công nghệ và chuyên gia AI có góc nhìn sâu sắc về nhu cầu thực tế của người lao động đối lập với năng lực công nghệ hiện tại trong ngành Khoa học Máy tính. Từ đó, hệ thống đưa ra các giải pháp cấu hình **AI Agent** tối ưu nhất cho từng vị trí công việc chuyên biệt.
 
-Dự án phân tích bộ dữ liệu khảo sát về automation desire của worker và expert-rated capability, nhằm đưa ra đề xuất ứng dụng AI Agent trong lĩnh vực Khoa học Máy tính.
+---
 
-## Dataset
+## 📂 Dataset
 
-| File | Nội dung | Records |
-|------|----------|---------|
-| `domain_worker_desires.csv` | Worker tự đánh giá mong muốn tự động hóa cho từng task | 5,731 tasks |
-| `domain_worker_metadata.csv` | Thông tin nhân khẩu học và thái độ về AI của worker | 1,500 workers |
-| `expert_rated_technological_capability.csv` | Chuyên gia đánh giá khả năng tự động hóa của task | 2,057 tasks |
-| `task_statement_with_metadata.csv` | O*NET task metadata (tần suất, importance, skill) | ~1,200+ tasks |
+Ứng dụng xử lý bộ dữ liệu đa chiều liên kết giữa hành vi con người và năng lực công nghệ:
 
-## Insight chính
+| File | Nội dung | Records | Trạng thái trong Code |
+|------|----------|---------|-----------------------|
+| `domain_worker_desires.csv` | Worker tự đánh giá mong muốn tự động hóa cho từng task | 5,731 tasks | **Đang sử dụng** (Tính toán `Worker Desire`) |
+| `domain_worker_metadata.csv` | Thông tin nhân khẩu học và thái độ về AI của worker | 1,500 workers | *Sẵn sàng cho tích hợp mở rộng* |
+| `expert_rated_technological_capability.csv` | Chuyên gia đánh giá khả năng tự động hóa của task | 2,057 tasks | **Đang sử dụng** (Tính toán `Expert Capacity`) |
+| `task_statement_with_metadata.csv` | O*NET task metadata (tần suất, tầm quan trọng, skill) | ~1,200+ tasks | *Sẵn sàng cho tích hợp mở rộng* |
 
-### Gap Analysis (Desire vs Capacity)
+---
 
-| CS Occupation | Worker Desire | Expert Capacity | Gap |
-|---|---|---|---|
-| Computer & Info Research Scientists | 3.77 | 2.60 | **+1.17** |
-| Computer & Info Systems Managers | 3.31 | 2.56 | **+0.75** |
-| Network/Systems Administrators | 3.65 | 3.42 | +0.23 |
-| Computer Systems Engineers | 3.23 | 3.04 | +0.19 |
-| IT Project Managers | 2.86 | 2.55 | +0.31 |
-| **Database Administrators** | **2.53** | **3.80** | **-1.27** |
-| Computer Network Support | 2.71 | 3.74 | -1.03 |
-| Web Developers | 3.07 | 4.09 | -1.02 |
-| Computer User Support | 2.95 | 3.89 | -0.94 |
-| Computer Programmers | 2.93 | 3.84 | -0.91 |
-| Computer Systems Analysts | 2.60 | 3.41 | -0.81 |
-| SQA Analysts & Testers | 3.23 | 3.76 | -0.53 |
+## 🚀 Các Tính Năng Chính Của Ứng Dụng
 
-### Lý do Worker muốn tự động hóa
-- Free Time (43.8%) > Repetitive (29.4%) = Human Error (29.4%) = Scale (29.4%) > Stress (16.1%) > Difficulty (11.9%)
+Hệ thống phân tích chuyên sâu **13 ngành nghề trọng điểm** thuộc khối Khoa học Máy tính (CS Roles) và được chia làm 4 phân hệ chính điều hướng qua Sidebar:
 
-### Lý do Worker muốn giữ con người
-- Domain Knowledge (30.2%) > Quality Oversight (30%) > Control (27.6%) > Empathy (25.8%) > Dynamic (24.1%) > Ethical (18.1%)
+* **Tổng quan (Overview):** 
+  * Hiển thị thống kê nhanh số lượng mẫu và số ngành IT bằng thẻ `st.metric`.
+  * Trực quan hóa **Top lý do muốn dùng AI** (Giải phóng thời gian, xử lý data lớn, giảm sai sót...) và **Top lý do sợ giao việc 100% cho AI** (Cần người duyệt chất lượng, trách nhiệm đạo đức/pháp lý, hiểu ngữ cảnh công ty...).
+* **Phân tích Độ Lệch (Gap Analysis):** 
+  * Tính toán chỉ số lệch bằng công thức $Gap = \text{Worker Desire} - \text{Expert Capacity}$.
+  * Trực quan hóa **Bản Đồ Định Vị 4 Góc Phần Tư** (Desire vs Capacity) dựa trên mốc trung vị chuẩn hóa $3.5$ giúp phân loại ngành nghề thành *Nhóm E dè* và *Nhóm Chờ đợi*.
+* **Phân tích Chuyên Sâu (CS Deep Dive):** 
+  * Bộ lọc chi tiết cho từng ngành để mổ xẻ động lực thúc đẩy và rào cản tâm lý của nhân sự.
+  * Tự động phân loại nhóm hành vi (*Nhóm Cẩn Thận*, *Nhóm Mệt Mỏi*, *Nhóm Cân Bằng*) để đưa ra lời khuyên quản trị thực tế.
+* **Đề xuất AI Agent:** 
+  * Khuyến nghị tự động cấu hình các AI Agent chuyên biệt phù hợp cho từng vị trí công việc (Ví dụ: `Code Review Agent` cho Lập trình viên, `Threat Detection Agent` cho An ninh mạng, `Self-healing Agent` cho Quản trị hệ thống...) kèm lập luận thực tế.
 
-## Đề xuất 6 AI Agent
+---
 
-1. **SQA & Testing Agent** - Auto test generation, regression, bug detection
-2. **Database Administration Agent** - Query optimization, auto DBA, NL2SQL
-3. **Web Development Agent** - Figma-to-code, code review, doc generation
-4. **Research Scientist Agent** - Literature review, experiment design, reproducibility
-5. **IT Project Management Agent** - Planning, risk monitoring, status reporting
-6. **Network & Systems Admin Agent** - Self-healing, security response, capacity planning
+## 🛠️ Công nghệ & Tối ưu 
 
-## Hướng dẫn
+* **Framework & Thư viện:** `Python 3.8+`, `Streamlit`, `Pandas`, `Plotly Express` & `Graph Objects`.
+* **Cơ chế An toàn dữ liệu:** Tích hợp bọc `try-except` thông minh khi đọc file CSV. Nếu thiếu file dữ liệu, ứng dụng sẽ thông báo lỗi bằng `st.error` và dừng app an toàn thay vì làm sụp giao diện.
+* **Tối ưu hiển thị (CSS Custom):** Nhúng mã CSS trực tiếp để phóng to kích thước hiển thị trên màn hình lớn hoặc máy chiếu (Chữ văn bản: **22px**, Tiêu đề con: **30px**, Chỉ số Metric: **45px Bold**), tăng cường khả năng quét thông tin nhanh chóng.
 
+---
+
+## 💻 Hướng dẫn Cài đặt & Khởi chạy
+
+### 1. Cài đặt các thư viện
 ```bash
-# Cài đặt dependencies
 pip install streamlit pandas plotly
-
-# Chạy Streamlit app
-streamlit run streamlit_app.py
-```
-
-## Kiến trúc
-
-```
-Human (Oversight, Control, Domain Expert)
-    ↓ Feedback/Approval
-Orchestrator Agent (Task decomposition, Planning)
-    ↓
-Code Agent | Test Agent | Doc Agent | Analysis Agent
-    ↓
-Tool Layer (APIs, DB, Cloud, Git)
-```
