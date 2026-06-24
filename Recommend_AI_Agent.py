@@ -13,32 +13,34 @@ st.markdown("""
     /* Phóng to chữ văn bản bình thường (Markdown, text) */
     html, body, [class*="st-"] p, li {
         font-size: 22px !important;
+        color: black !important;
     }
     
     /* Phóng to các tiêu đề con (Subheader) */
     h3 {
         font-size: 30px !important;
+        color: black !important;
     }
 
     /* Phóng to phần con số bự trong thẻ st.metric */
     [data-testid="stMetricValue"] {
         font-size: 45px !important;
         font-weight: bold !important;
+        color: black !important;
     }
     
     /* Phóng to chữ tiêu đề nhỏ phía trên con số trong thẻ st.metric */
     [data-testid="stMetricLabel"] {
         font-size: 24px !important;
+        color: black !important;
     }
 </style>
 """, unsafe_allow_html=True)
-
 
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 
 @st.cache_data
 def load_data():
-    # Thêm bọc try-except để tránh app bị sập đỏ màn hình nếu file dữ liệu gặp sự cố
     try:
         d = pd.read_csv(os.path.join(DATA_DIR, "domain_worker_desires.csv"))
         c = pd.read_csv(os.path.join(DATA_DIR, "expert_rated_technological_capability.csv"))
@@ -60,34 +62,30 @@ CS_ROLES = [
 
 # Lọc riêng bảng dữ liệu mong muốn của nhân viên, chỉ giữ lại 13 ngành Khoa học máy tính
 cs_desires_filtered = desires[desires["Occupation (O*NET-SOC Title)"].isin(CS_ROLES)]
-# Tính điểm số mong muốn tự động hóa trung bình cho riêng 13 ngành IT này thôi
 avg_desire = cs_desires_filtered.groupby("Occupation (O*NET-SOC Title)")["Automation Desire Rating"].mean()
 
 # Lọc riêng bảng dữ liệu đánh giá của chuyên gia, chỉ giữ lại 13 ngành Khoa học máy tính
 cs_capability_filtered = capability[capability["Occupation (O*NET-SOC Title)"].isin(CS_ROLES)]
-# Tính điểm số năng lực tự động hóa thực tế trung bình cho riêng 13 ngành IT này thôi
 avg_cap = cs_capability_filtered.groupby("Occupation (O*NET-SOC Title)")["Automation Capacity Rating"].mean()
 
-# Tìm những ngành nghề có mặt ở cả 2 file dữ liệu để đối chiếu (ở đây sẽ ra chính xác 13 ngành IT)
 common = avg_desire.index.intersection(avg_cap.index)
 
-# Gộp các điểm số trung bình tính được ở trên thành một bảng Excel mới để dễ so sánh chênh lệch
+# Gộp dữ liệu thành bảng đối chiếu
 gap_df = pd.DataFrame({"Occupation": common, "Worker Desire": avg_desire[common].values,
                        "Expert Capacity": avg_cap[common].values})
-# Tính điểm lệch (Gap) = (Điểm nhân viên thèm muốn) TRỪ ĐI (Điểm công nghệ thực tế làm được) và làm tròn 2 chữ số thập phân
 gap_df["Gap"] = (gap_df["Worker Desire"] - gap_df["Expert Capacity"]).round(2)
-# Sắp xếp điểm lệch từ thấp đến cao để chuẩn bị vẽ biểu đồ
 cs_gap = gap_df.sort_values("Gap")
 
-# Khai báo tên của 4 trang nội dung mà người dùng có thể bấm vào xem
+# Khai báo menu điều hướng
 pages = ["Tổng quan", "Gap Analysis", "CS Deep Dive", "Đề xuất AI Agent"]
-# Hiện ra các nút tròn (Radio button) để người dùng tích chọn trang muốn xem, kết quả chọn lưu vào biến 'choice'
 choice = st.sidebar.radio("Chọn", pages)
 
+# =====================================================================
+# 1. TRANG TỔNG QUAN
+# =====================================================================
 if choice == "Tổng quan":
     st.title("AI Agent trong Khoa học Máy tính")
     
-    # Lọc dữ liệu chuẩn cho khối ngành công nghệ
     cs_desires = desires[desires["Occupation (O*NET-SOC Title)"].isin(CS_ROLES)]
     cs_capability = capability[capability["Occupation (O*NET-SOC Title)"].isin(CS_ROLES)]
 
@@ -100,9 +98,6 @@ if choice == "Tổng quan":
 
     st.divider()
 
-    # ==========================================
-    # BIỂU ĐỒ 1: LÝ DO MUỐN DÙNG AI
-    # ==========================================
     st.subheader("1. Tại sao kỹ sư IT khao khát dùng AI?")
     st.markdown("Thay vì ôm việc, người lao động muốn giao việc cho AI để giải quyết những nỗi đau thực tế sau:")
 
@@ -131,16 +126,12 @@ if choice == "Tổng quan":
     
     fig1.update_layout(
         title="Top lý do muốn tự động hóa công việc",
-        title_font_size=22, height=550, margin=dict(r=250)
+        title_font_size=22, height=550, margin=dict(l=450, r=80)
     )
     fig1.update_yaxes(title="", tickfont=dict(size=18, color="black"))
     fig1.update_xaxes(title="Số lượng người", tickfont=dict(size=18, color="black"), title_font=dict(size=18, color="black"))
-    
     st.plotly_chart(fig1, use_container_width=True, theme=None)
 
-    # ==========================================
-    # BIỂU ĐỒ 2: LÝ DO KHÔNG DÁM GIAO 100% CHO AI
-    # ==========================================
     st.subheader("2. Tại sao lại sợ giao phó 100% cho AI?")
     st.markdown("Dù AI rất giỏi, nhưng con người vẫn kiên quyết phải giữ lại quyền can thiệp vì những lo lắng sau:")
 
@@ -156,10 +147,10 @@ if choice == "Tổng quan":
     ac = {label: int(cs_desires[col].sum()) for col, label in agency_map.items()}
     adf = pd.DataFrame({"Reason": list(ac.keys()), "Count": list(ac.values())})
     adf["%"] = (adf["Count"] / len(cs_desires) * 100).round(1)
-    
     adf = adf.sort_values("Count", ascending=True).reset_index(drop=True)
 
-    fig2 = px.bar(adf, x="Count", y="Reason", color="Count", color_continuous_scale="Reds")
+    # CHỈNH SỬA: Thêm tham số orientation="h" định dạng chuẩn thanh ngang
+    fig2 = px.bar(adf, x="Count", y="Reason", orientation="h", color="Count", color_continuous_scale="Reds")
     
     fig2.update_traces(
         texttemplate="%{x} người (%{customdata}%)", 
@@ -170,13 +161,15 @@ if choice == "Tổng quan":
     
     fig2.update_layout(
         title="Top lý do kiên quyết phải giữ lại con người",
-        title_font_size=22, height=550, margin=dict(r=250)
+        title_font_size=22, height=550, margin=dict(l=450, r=80)
     )
     fig2.update_yaxes(title="", tickfont=dict(size=20, color="black"))
     fig2.update_xaxes(title="Số lượng người", tickfont=dict(size=18, color="black"), title_font=dict(size=18, color="black"))
-    
     st.plotly_chart(fig2, use_container_width=True, theme=None)
 
+# =====================================================================
+# 2. TRANG GAP ANALYSIS
+# =====================================================================
 elif choice == "Gap Analysis":
     st.title("Phân tích Độ Lệch: Giữa 'Giấc Mơ' và 'Thực Tế'")
     st.markdown("""
@@ -186,19 +179,20 @@ elif choice == "Gap Analysis":
     * 🟢 **Độ lệch Dương (Vùng Chờ Đợi):** Con người rất khát khao tự động hóa, nhưng AI hiện tại chưa đáp ứng được.
     """)
 
-    fig2 = px.bar(cs_gap, x="Gap", y="Occupation", color="Gap", color_continuous_scale="RdYlGn")
+    fig2 = px.bar(cs_gap, x="Gap", y="Occupation", orientation="h", color="Gap", color_continuous_scale="RdYlGn")
     
     fig2.update_traces(
         texttemplate="%{x:.2f}", 
         textposition="outside",
         textfont=dict(size=16, color="black")
     )
-    fig2.update_layout(height=750, margin=dict(r=100))
+    fig2.update_layout(height=750, margin=dict(l=400, r=80))
     fig2.update_yaxes(title="", categoryorder="total ascending", tickfont=dict(size=18, color="black"))
     fig2.update_xaxes(title="Điểm Gap (Mong muốn - Năng lực)", tickfont=dict(size=18, color="black"), title_font=dict(size=18, color="black"))
-    st.plotly_chart(fig2, use_container_width=True)
-
     
+    # CHỈNH SỬA: Thêm theme=None để giữ phông chữ to rõ ràng
+    st.plotly_chart(fig2, use_container_width=True, theme=None)
+
     st.markdown("---")
     st.subheader("Bản Đồ Định Vị")
     st.markdown("""
@@ -220,9 +214,9 @@ elif choice == "Gap Analysis":
         title="Bản Đồ 4 Góc Phần Tư (Desire vs Capacity)"
     )
     
-    # CHỈNH SỬA: Chuẩn hóa đường chia mốc về điểm trung vị 3.5 để phân loại chính xác, trực quan
-    mean_cap = 3.5
-    mean_des = 3.5
+    # CHỈNH SỬA: Đổi mốc gõ tay 3.5 thành điểm trung bình tự động của riêng khối CS để phân loại chuẩn xác
+    mean_cap = cs_gap["Expert Capacity"].mean()
+    mean_des = cs_gap["Worker Desire"].mean()
     
     fig_scatter.update_traces(
         marker=dict(line=dict(width=3, color='black')), 
@@ -230,17 +224,19 @@ elif choice == "Gap Analysis":
         textfont=dict(size=16, color="black") 
     )
     
-    fig_scatter.add_hline(y=mean_des, line_dash="dash", line_color="black", line_width=2, annotation_text="Mốc trung bình: Mong muốn (3.5)", annotation_font_size=16)
-    fig_scatter.add_vline(x=mean_cap, line_dash="dash", line_color="black", line_width=2, annotation_text="Mốc trung bình: Năng lực AI (3.5)", annotation_font_size=16)
+    fig_scatter.add_hline(y=mean_des, line_dash="dash", line_color="black", line_width=2, annotation_text=f"Mức TB Mong muốn ({mean_des:.2f})", annotation_font_size=16)
+    fig_scatter.add_vline(x=mean_cap, line_dash="dash", line_color="black", line_width=2, annotation_text=f"Mức TB Năng lực AI ({mean_cap:.2f})", annotation_font_size=16)
     
     fig_scatter.update_layout(
         height=800, 
         font=dict(color="black", size=18), 
         title_font_size=26
     )
+    st.plotly_chart(fig_scatter, use_container_width=True, theme=None)
     
-    st.plotly_chart(fig_scatter, use_container_width=True)
-    
+# =====================================================================
+# 3. TRANG CS DEEP DIVE
+# =====================================================================
 elif choice == "CS Deep Dive":
     st.title("Phân tích xem nhân viên Ngành Khoa Học Máy Tính nghĩ gì?")
     st.markdown("Nỗi lo lớn nhất của nhân viên các ngành thuộc Khoa Học Máy Tính là gì:")
@@ -289,14 +285,11 @@ elif choice == "CS Deep Dive":
         st.write(f"**Điểm năng lực của AI hiện tại:** {diem_may_gioi:.2f} / 5.0")
     
     with col2:
-        st.markdown(f"**Nhận xét:  họ thuộc** {nhan_xet}")
+        st.markdown(f"**Nhận xét:  học thuộc** {nhan_xet}")
         st.markdown(f"**Lý do muốn dùng AI :** {thich_nhat}")
         st.markdown(f"**Lý do sợ giao việc cho AI:** {so_nhat}")
         st.markdown(f"**Lời Khuyên:** {loi_khuyen}")
 
-    # =================================================================
-    # CHIA LÀM 2 CỘT SONG SONG ĐỂ BIỂU ĐỒ KHÔNG BỊ TRỘN LẪN MÀU SẮC
-    # =================================================================
     st.markdown("---")
     st.subheader("Biểu đồ chi tiết: Động lực thúc đẩy vs Rào cản tâm lý")
     
@@ -317,7 +310,7 @@ elif choice == "CS Deep Dive":
                           title="Các lý do khuyến khích muốn dùng AI",
                           color_discrete_sequence=["#1E88E5"])
         fig_muon.update_traces(texttemplate="%{x} người", textposition="outside", textfont=dict(size=16, color="black"))
-        fig_muon.update_layout(height=450, font=dict(size=16, color="black"), margin=dict(r=100))
+        fig_muon.update_layout(height=450, font=dict(size=16, color="black"), margin=dict(l=350,r=100))
         fig_muon.update_yaxes(title="")
         st.plotly_chart(fig_muon, use_container_width=True, theme=None)
         
@@ -326,10 +319,13 @@ elif choice == "CS Deep Dive":
                          title="Các nỗi lo ngăn cản giao việc cho AI",
                          color_discrete_sequence=["#D32F2F"])
         fig_so.update_traces(texttemplate="%{x} người", textposition="outside", textfont=dict(size=16, color="black"))
-        fig_so.update_layout(height=450, font=dict(size=16, color="black"), margin=dict(r=100))
+        fig_so.update_layout(height=450, font=dict(size=16, color="black"), margin=dict(l=350,r=100))
         fig_so.update_yaxes(title="")
         st.plotly_chart(fig_so, use_container_width=True, theme=None)
 
+# =====================================================================
+# 4. TRANG ĐỀ XUẤT AI AGENT
+# =====================================================================
 elif choice == "Đề xuất AI Agent":
     st.title("Đề Xuất AI Agent")
     st.markdown("Dựa vào điểm chênh lệch ở trang trước, máy tính sẽ đưa ra lời khuyên xem **nên dùng AI Agent nào**.")
