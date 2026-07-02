@@ -21,11 +21,13 @@
 
 Hệ thống phân tích chuyên sâu **13 ngành nghề trọng điểm** thuộc khối Khoa học Máy tính (CS Roles) và được chia làm 4 phân hệ chính điều hướng qua Sidebar:
 
-* **1. Tổng quan (Overview):** * Hiển thị thống kê nhanh số lượng mẫu và số ngành IT.
+* **1. Tổng quan (Overview):** 
+  * Hiển thị thống kê nhanh số lượng mẫu và số ngành IT.
   * Trực quan hóa **Top lý do muốn dùng AI** (Giải phóng thời gian, xử lý data lớn...) và **Top rào cản tâm lý** (Cần người duyệt chất lượng, trách nhiệm đạo đức/pháp lý...).
-* **2. Phân tích Độ Lệch (Gap Analysis):** * Tính toán chỉ số lệch bằng công thức $Gap = \text{Worker Desire} - \text{Expert Capacity}$.
+* **2. Phân tích Độ Lệch (Gap Analysis):** 
+  * Tính toán chỉ số lệch bằng công thức $Gap = \text{Worker Desire} - \text{Expert Capacity}$.
   * Trực quan hóa **Bản Đồ Định Vị** giúp nhận diện *Khủng hoảng Thiếu hụt (Nhóm chờ đợi)* và *Khủng hoảng Niềm tin (Nhóm e dè)* để định hướng chiến lược đầu tư công nghệ.
-* **3. Phân tích Chuyên Sâu (CS Deep Dive):** * Cung cấp bộ lọc phân khúc (Demographic filters) để phân tích chéo hành vi theo số năm kinh nghiệm.
+* **3. Phân tích Chuyên Sâu (CS Deep Dive):** 
   * Tự động phân loại nhóm hành vi (*Nhóm Cẩn Thận, Nhóm Mệt Mỏi, Nhóm Cân Bằng*) để đưa ra lời khuyên quản trị nhân sự thực tế.
 * **4. Đề xuất AI Agent:** * Khuyến nghị tự động cấu hình các AI Agent chuyên biệt phù hợp cho từng vị trí (Ví dụ: `Code Review Agent` cho Lập trình viên, `Self-healing Agent` cho SRE...) nhằm tối ưu hóa hiệu suất làm việc.
 
