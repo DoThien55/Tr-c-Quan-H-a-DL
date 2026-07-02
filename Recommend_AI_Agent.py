@@ -171,7 +171,7 @@ if choice == "Tổng quan":
 # 2. TRANG GAP ANALYSIS
 # =====================================================================
 elif choice == "Gap Analysis":
-    st.title("Phân tích Độ Lệch: Giữa 'Giấc Mơ' và 'Thực Tế'")
+    st.title("Phân tích Độ Lệch: Giữa 'Mong Muốn' và 'Thực Tế'")
     st.markdown("""
     Lấy **Mức độ nhân viên muốn** trừ đi **Năng lực thực tế AI làm được**. 
     Kết quả sinh ra 2 trường hợp:
@@ -190,7 +190,7 @@ elif choice == "Gap Analysis":
     fig2.update_yaxes(title="", categoryorder="total ascending", tickfont=dict(size=18, color="black"))
     fig2.update_xaxes(title="Điểm Gap (Mong muốn - Năng lực)", tickfont=dict(size=18, color="black"), title_font=dict(size=18, color="black"))
     
-    # CHỈNH SỬA: Thêm theme=None để giữ phông chữ to rõ ràng
+    # Thêm theme=None để giữ phông chữ to rõ ràng
     st.plotly_chart(fig2, use_container_width=True, theme=None)
 
     st.markdown("---")
@@ -271,7 +271,7 @@ elif choice == "CS Deep Dive":
         loi_khuyen = "Tuyệt đối không để máy tự làm tự quyết. Phải bắt máy làm nháp, người kiểm tra xong mới được chạy."
     elif diem_gap > 0.5:
         nhan_xet = "Nhóm Mệt Mỏi (Đang làm việc quá sức, rất muốn có máy làm thay)"
-        loi_khuyen = "Cứ mạnh dạn giao khoán hết mấy việc lặt vặt cho máy làm để nhân viên được nghỉ ngơi."
+        loi_khuyen = "Cứ mạnh dạn giao hết mấy việc lặt vặt cho máy làm để nhân viên được nghỉ ngơi."
     else:
         nhan_xet = "Nhóm Cân Bằng (Biết chia việc hợp lý)"
         loi_khuyen = "Chia việc đôi bên cùng làm. Máy xử lý dữ liệu thô, con người ra quyết định."
